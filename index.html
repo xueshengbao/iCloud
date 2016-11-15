@@ -109,7 +109,48 @@
 						
 					</ul>
 				</div>
-			</div>						
+			</div>	
+			<div class="color">
+				<div class="box">
+					<input type="text" value="搜索" />
+					<p>列表颜色</p>
+					<ul>
+						<li class="one active">
+							<div></div>
+						</li>
+						<li class="two">
+							<div></div>
+						</li>
+						<li class="three">
+							<div></div>
+						</li>
+						<li class="four">
+							<div></div>
+						</li>
+						<li class="five">
+							<div></div>
+						</li>
+						<li class="six">
+							<div></div>
+						</li>
+						<li class="seven">
+							<div></div>
+						</li>
+						<li class="eight">
+							<div></div>
+						</li>
+					</ul>
+					<div class="color-bottom">
+						<div class="bLeft">
+							<a href="#">删除</a>
+						</div>
+						<div class="bRight">
+							<a href="#">取消</a>
+							<a href="#">完成</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>		
 	</body>
 	<script>
@@ -121,7 +162,14 @@
 			
 			
 		}])
-		
+		$(document).ready(function(){
+			
+			$(".right .right-options .options").on("click",function(){
+				$("#box .color").toggleClass("click");
+			})
+			
+			
+		})
 		
 		
 	</script>

@@ -458,4 +458,159 @@ body{
             }
         }
     }
+    .color{
+        position: absolute;
+        display: none;
+        width: 366px;
+        height: 203px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #ccc;
+        background: #fff;
+        z-index: 100;
+        right: 70px;
+        top: 30px;
+        .box{
+            width: 346px;
+            height: 183px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            input{
+                color: #04ACF6;
+                width: 302px;
+                height: 40px;
+                margin: 10px 17px;
+                padding-left: 10px;
+                outline: none;
+                border: 1px solid #ccc;
+            }
+            p{
+                line-height: 20px;
+                margin: 10px 0;
+                margin-left: 20px;
+            }
+            ul{
+                margin-bottom: 0 !important;
+                height: 35px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #ccc;
+                li{
+                    float: left;
+                    width: 20px;
+                    height: 20px;
+                    position: relative;
+                    margin: 0 2px;
+                    border-radius: 50%;
+                    box-sizing: border-box;
+                    div{
+                        width: 14px;
+                        height: 14px;
+                        position: absolute;
+                        display: block;
+                        left: 0;
+                        right: 0;
+                        top: 0;
+                        bottom: 0;
+                        margin: auto;
+                        border-radius: 50%;
+                    }
+                }
+                .one{
+                    margin-left: 20px;
+                    background: #04ACF6;
+                    div{
+                        background: #04ACF6;
+                    }
+                }
+                .two{
+                    background: #56D75E;
+                    div{
+                        background: #56D75E;
+                    }
+                }
+                .three{
+                    background: #EFCB41;
+                    div{
+                        background: #EFCB41;
+                    }
+                }
+                .four{
+                    background: #A57D59;
+                    div{
+                        background: #A57D59;
+                    }
+                }
+                .five{
+                    background: #FF2369;
+                    div{
+                        background: #FF2369;
+                    }
+                }
+                .six{
+                    background: #FD7830;
+                    div{
+                        background: #FD7830;
+                    }
+                }
+                .seven{
+                    background: #CB7AD7;
+                    div{
+                        background: #CB7AD7;
+                    }
+                }
+                .eight{
+                    background: #FE7C29;
+                    div{
+                        background: #FE7C29;
+                    }
+                }
+                .active{
+                    background: transparent;
+                    border: 2px solid #04ACF6 !important;
+                }
+            }
+            .color-bottom{
+                height: 25px;
+                 margin-top: 10px;
+                 .bLeft{
+                     float: left;
+                     height: 25px;
+                     a{
+                        height: 25px;
+                        color: #FF5363;
+                        line-height: 25px;
+                        display: block;
+                        padding: 0 12px;
+                         text-decoration: none;
+                     }
+                 }
+                 .bRight{
+                      float: right;
+                     height: 25px;
+                     a:nth-child(1){
+                         text-decoration: none;
+                         display: block;
+                        height: 25px;
+                        float: left;
+                        padding: 0 10px;
+                        line-height: 25px;
+                        color: #04ACF6;
+                        border-right: 1px solid #ccc;
+                     }
+                     a:nth-child(2){
+                         display: block;
+                        height: 25px;
+                        float: left;
+                        padding: 0 10px;
+                        line-height: 25px;
+                        color: #04ACF6;
+                         text-decoration: none;
+                     }
+                 }
+            }
+        }
+    }
+    .click{
+        display: block;
+    }
 }

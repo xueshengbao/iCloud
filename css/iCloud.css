@@ -504,3 +504,189 @@ body {
   border-bottom: 1px solid #ccc;
   margin-left: 50px;
 }
+
+#box .color {
+  position: absolute;
+  display: none;
+  width: 366px;
+  height: 203px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #ccc;
+  background: #fff;
+  z-index: 100;
+  right: 70px;
+  top: 30px;
+}
+
+#box .color .box {
+  width: 346px;
+  height: 183px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#box .color .box input {
+  color: #04ACF6;
+  width: 302px;
+  height: 40px;
+  margin: 10px 17px;
+  padding-left: 10px;
+  outline: none;
+  border: 1px solid #ccc;
+}
+
+#box .color .box p {
+  line-height: 20px;
+  margin: 10px 0;
+  margin-left: 20px;
+}
+
+#box .color .box ul {
+  margin-bottom: 0 !important;
+  height: 35px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+
+#box .color .box ul li {
+  float: left;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  margin: 0 2px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+#box .color .box ul li div {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 50%;
+}
+
+#box .color .box ul .one {
+  margin-left: 20px;
+  background: #04ACF6;
+}
+
+#box .color .box ul .one div {
+  background: #04ACF6;
+}
+
+#box .color .box ul .two {
+  background: #56D75E;
+}
+
+#box .color .box ul .two div {
+  background: #56D75E;
+}
+
+#box .color .box ul .three {
+  background: #EFCB41;
+}
+
+#box .color .box ul .three div {
+  background: #EFCB41;
+}
+
+#box .color .box ul .four {
+  background: #A57D59;
+}
+
+#box .color .box ul .four div {
+  background: #A57D59;
+}
+
+#box .color .box ul .five {
+  background: #FF2369;
+}
+
+#box .color .box ul .five div {
+  background: #FF2369;
+}
+
+#box .color .box ul .six {
+  background: #FD7830;
+}
+
+#box .color .box ul .six div {
+  background: #FD7830;
+}
+
+#box .color .box ul .seven {
+  background: #CB7AD7;
+}
+
+#box .color .box ul .seven div {
+  background: #CB7AD7;
+}
+
+#box .color .box ul .eight {
+  background: #FE7C29;
+}
+
+#box .color .box ul .eight div {
+  background: #FE7C29;
+}
+
+#box .color .box ul .active {
+  background: transparent;
+  border: 2px solid #04ACF6 !important;
+}
+
+#box .color .box .color-bottom {
+  height: 25px;
+  margin-top: 10px;
+}
+
+#box .color .box .color-bottom .bLeft {
+  float: left;
+  height: 25px;
+}
+
+#box .color .box .color-bottom .bLeft a {
+  height: 25px;
+  color: #FF5363;
+  line-height: 25px;
+  display: block;
+  padding: 0 12px;
+  text-decoration: none;
+}
+
+#box .color .box .color-bottom .bRight {
+  float: right;
+  height: 25px;
+}
+
+#box .color .box .color-bottom .bRight a:nth-child(1) {
+  text-decoration: none;
+  display: block;
+  height: 25px;
+  float: left;
+  padding: 0 10px;
+  line-height: 25px;
+  color: #04ACF6;
+  border-right: 1px solid #ccc;
+}
+
+#box .color .box .color-bottom .bRight a:nth-child(2) {
+  display: block;
+  height: 25px;
+  float: left;
+  padding: 0 10px;
+  line-height: 25px;
+  color: #04ACF6;
+  text-decoration: none;
+}
+
+#box .click {
+  display: block;
+}
