@@ -1,9 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="test">
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>iCloud</title>
+	    <link rel="stylesheet" href="css/bootstrap.min.css">
+	    <link rel="stylesheet" href="css/iCloud.css">
+	    <script src="js/jquery.js"></script>
+	    <script src="js/angular.js"></script>		
 	</head>
-	<body>
+	<body ng-controller="testCtrl">
+		<div id="box">
+			<div class="left">
+				<div class="left-top"></div>
+				<div class="left-bottom"></div>
+			</div>
+			<div class="right">
+				<div class="right-top"></div>
+				<div class="right-bottom"></div>
+			</div>						
+		</div>		
 	</body>
+	<script>
+		app=angular.module("test",[]);
+		app.controller("testCtrl",["$scope",function($scope){
+			$scope.lists=[{id:1,name:"默认",color:"#04ACF6",todos:[{id:1,info:"你好",status:0,has:0},{id:2,info:"大家好",status:1,has:0}]}];
+			
+			
+			
+			
+		}])
+		
+		
+		
+	</script>
 </html>

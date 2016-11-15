@@ -1,5 +1,27 @@
+$color:(1:#04ACF6,2:#56D75E,3:#EFCB41,4:#A57D59,5:#FF2369,6:#FD7830,7:#CB7AD7,8:#FE7C29);
+html{
+  font-size: 100px;
+}
 body{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  background: url("../images/background.png") repeat;
+  font-size: 16px;
+}
+*{
+  padding:0;
+  margin:0;
+  list-style: none;
+  text-decoration: none;
+}
+#box{
+    position: relative;
+    .left{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30%;
+        background:#383836;
+        overflow: hidden;
+        min-width: 307px;
+        height:100vh;
+    }
 }
