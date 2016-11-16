@@ -1,4 +1,4 @@
-$color:(1:#04ACF6,2:#56D75E,3:#EFCB41,4:#A57D59,5:#FF2369,6:#FD7830,7:#CB7AD7,8:#FE7C29);
+
 html{
   font-size: 100px;
 }
@@ -63,6 +63,12 @@ body{
                     margin-right: 10px;
                     background: #04ACF6;
                 }
+                $color:("blue":#04ACF6,"green":#56D75E,"yellow":#EFCB41,"brown":#A57D59,"pink":#FF2369,"orange":#FD7830,"purple":#CB7AD7);
+                @each $i in map_keys($color) {                 
+                      .circle.#{$i}{
+                        background-color: map_get($color,$i);
+                      }
+                }                        
                 .center{
                     height: 45px;
                     background: transparent;
@@ -77,6 +83,9 @@ body{
                         width: 50% ;
                         display: block;
                         float: left;
+                        background: transparent;
+                        border: none;
+                        outline: none;
                     }
                     .wifi{
                         float: right;
@@ -96,36 +105,44 @@ body{
                     
                 }
             }
-            .jihua{
-                height: 45px;
-                border-bottom: 1px solid #1A1A1A;
-                box-sizing: border-box;
-                span{
-                    width: 19px;
-                    height: 19px;
-                    margin-left: 20px;
-                    margin-top: 13px;
-                    border-radius: 0;
-                    background: url("../images/icloud.png") no-repeat;
-                    background-position: -11px -371px;
-                    margin-right: 10px;
-                    float: left;
-                    display: block;
-                }
-                div{
-                    height: 45px;
-                    background: transparent;
-                    font-size: 20px;
-                    width: 83%;
-                    color: #fff;
-                    float: left;
-                    border-bottom: 0;
-                    box-sizing: border-box;
-                    line-height: 44px;
-                }
+            .active{
+                background: #1A1A1A;
             }
             
+            
         }
+        .jihua{
+            height: 45px;
+            border-bottom: 1px solid #1A1A1A;
+            box-sizing: border-box;
+            span{
+                width: 19px;
+                height: 19px;
+                margin-left: 20px;
+                margin-top: 13px;
+                border-radius: 0;
+                background: url("../images/icloud.png") no-repeat;
+                background-position: -11px -371px;
+                margin-right: 10px;
+                float: left;
+                display: block;
+            }
+            div{
+                height: 45px;
+                background: transparent;
+                font-size: 20px;
+                width: 83%;
+                color: #fff;
+                float: left;
+                border-bottom: 0;
+                box-sizing: border-box;
+                line-height: 44px;
+            }
+        }
+        
+        
+        
+        
     }
     .right{
         position: absolute;
@@ -194,9 +211,7 @@ body{
             box-sizing: border-box;
             border-bottom: 1px solid #CDCDCD;
             position: relative;
-            span{
-                color: #04ACF6;
-            }
+
             .options{
                 color: #04ACF6;
                 position: relative;
@@ -383,10 +398,12 @@ body{
                                 margin-left: 50px;
                             }
                         }
+                        
                         &>.import{
                             padding-left: 30px;
                             position: relative;
                             height: 52px;
+                            display: none;
                             &>.top{
                                 position: absolute;
                                 top: 0;
@@ -431,6 +448,9 @@ body{
                                 z-index: 1;
                             }
                         }
+                        &>.active{
+                            display: block;
+                        }
                         &>.add{
                             padding-left: 30px;
                             position: relative;
@@ -458,6 +478,35 @@ body{
             }
         }
     }
+    $color:("blue":#04ACF6,"green":#56D75E,"yellow":#EFCB41,"brown":#A57D59,"pink":#FF2369,"orange":#FD7830,"purple":#CB7AD7);
+    @each $i in map_keys($color) {                 
+          .right .right-options span.#{$i}{
+            color: map_get($color,$i);
+          }
+          .color .box ul li.#{$i}{
+            background: map_get($color,$i);
+            div{
+                background: map_get($color,$i);
+            }               
+          }
+          .right.#{$i} .right-finish .uls .done ul .yi .big{
+                  border-color: map_get($color,$i);
+          }
+          .right.#{$i} .right-finish .uls .done ul .yi .big .small{
+                  background: map_get($color,$i);
+          }
+          .right.#{$i} .right-finish .uls .done ul .wei .big{
+               border: 2px solid map_get($color,$i);
+          }
+          .right.#{$i} .right-finish .uls .done .del,.right.#{$i} .right-options .options{
+              color: map_get($color,$i);
+          }
+          .color.#{$i} .box input{
+              color: map_get($color,$i);
+          }
+    }
+    
+        
     .color{
         position: absolute;
         display: none;
@@ -494,6 +543,7 @@ body{
                 height: 35px;
                 box-sizing: border-box;
                 border-bottom: 1px solid #ccc;
+                padding-left: 20px;
                 li{
                     float: left;
                     width: 20px;
@@ -515,58 +565,8 @@ body{
                         border-radius: 50%;
                     }
                 }
-                .one{
-                    margin-left: 20px;
-                    background: #04ACF6;
-                    div{
-                        background: #04ACF6;
-                    }
-                }
-                .two{
-                    background: #56D75E;
-                    div{
-                        background: #56D75E;
-                    }
-                }
-                .three{
-                    background: #EFCB41;
-                    div{
-                        background: #EFCB41;
-                    }
-                }
-                .four{
-                    background: #A57D59;
-                    div{
-                        background: #A57D59;
-                    }
-                }
-                .five{
-                    background: #FF2369;
-                    div{
-                        background: #FF2369;
-                    }
-                }
-                .six{
-                    background: #FD7830;
-                    div{
-                        background: #FD7830;
-                    }
-                }
-                .seven{
-                    background: #CB7AD7;
-                    div{
-                        background: #CB7AD7;
-                    }
-                }
-                .eight{
-                    background: #FE7C29;
-                    div{
-                        background: #FE7C29;
-                    }
-                }
                 .active{
-                    background: transparent;
-                    border: 2px solid #04ACF6 !important;
+                    margin-left: 20px;
                 }
             }
             .color-bottom{
@@ -608,9 +608,11 @@ body{
                      }
                  }
             }
-        }
+        
+         }
     }
     .click{
         display: block;
     }
 }
+

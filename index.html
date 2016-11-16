@@ -42,28 +42,29 @@
 	                                </li>
 	                            </ul>
 	                            <ul class="nav navbar-nav navbar-right">
-	                                <li><a href="#" id="additem" class="iconfont" ng-click="addlist();">+</a></li>
+	                                <li><a href="#" id="additem" class="iconfont" ng-click="addlist();save2local()">+</a></li>
 	                            </ul>
 	                        </div><!-- /.navbar-collapse -->
 	                    </div><!-- /.container-fluid -->
 	               </nav>
 				</div>
-				<ul class="left-bottom">
-					<li class="jihua">
-						<span></span>
-						<div>已计划</div>
-					</li>
-					<li>
-						<span class="circle"></span>
+				<div class="jihua">
+					<span></span>
+					<div>已计划</div>
+				</div>
+				<div my-ul>
+					
+					<li ng-class="{active:cu===$index}" ng-repeat="x in lists track by $index">
+						<span class="circle {{x.theme}}"></span>
 						<div class="center">
-							<span class="wenzi">默认</span>
+							<input class="wenzi" ng-model="x.name" ng-keyup="save2local()" type="text" />
 							<!--<input type="text" />-->
 							<span class="wifi"></span>
 						</div>
 					</li>
-				</ul>
+				</div>
 			</div>
-			<div class="right">
+			<div class="right {{lists[cu].theme}}">
 				<div class="right-top">
 					<span class="sousuo"></span>
 					<input class="search" type="text" placeholder="搜索所有提醒">
@@ -73,8 +74,8 @@
 					</div>
 				</div>
 				<div class="right-options">
-					<span>默认</span>
-					<div class="options">选项</div>
+					<span class="{{lists[cu].theme}}">{{lists[cu].name}}</span>
+					<div class="options" ng-click="color($event)">选项</div>
 				</div>
 				<div class="right-finish">
 					<ul class="uls">
@@ -101,44 +102,22 @@
 									<div class="bot"></div>
 									<input class="text" type="text" />
 								</li>
-								<li class="add">
-									<input type="text" placeholder="新项目"/>
-								</li>
+		 						<li block></li>
 							</ul>
 						</li>
 						
 					</ul>
 				</div>
 			</div>	
-			<div class="color">
+			<div class="color {{lists[cu].theme}}">
 				<div class="box">
-					<input type="text" value="搜索" />
+					<input type="text" ng-model="lists[cu].name" />
 					<p>列表颜色</p>
 					<ul>
-						<li class="one active">
+						<li class="{{i}}" ng-repeat="i in colors" ng-click="lists[cu].theme=i;save2local()">
 							<div></div>
 						</li>
-						<li class="two">
-							<div></div>
-						</li>
-						<li class="three">
-							<div></div>
-						</li>
-						<li class="four">
-							<div></div>
-						</li>
-						<li class="five">
-							<div></div>
-						</li>
-						<li class="six">
-							<div></div>
-						</li>
-						<li class="seven">
-							<div></div>
-						</li>
-						<li class="eight">
-							<div></div>
-						</li>
+						
 					</ul>
 					<div class="color-bottom">
 						<div class="bLeft">
@@ -146,7 +125,7 @@
 						</div>
 						<div class="bRight">
 							<a href="#">取消</a>
-							<a href="#">完成</a>
+							<a href="#" ng-click="save2local()">完成</a>
 						</div>
 					</div>
 				</div>
@@ -155,21 +134,135 @@
 	</body>
 	<script>
 		app=angular.module("test",[]);
-		app.controller("testCtrl",["$scope",function($scope){
-			$scope.lists=[{id:1,name:"默认",color:"#04ACF6",todos:[{id:1,info:"你好",status:0,has:0},{id:2,info:"大家好",status:1,has:0}]}];
-			
-			
+		
+		////////////////////////////////////////////////////////    删 除
+		
+		app.directive("myUl",[function(){
+			return{
+				restrict:"AE",
+				replace:true,
+				template:'<ul class="left-bottom"><div ng-transclude></div></ul>',
+				transclude:true,
+				link:function($scope,el){
+					$(document).on("keyup",":input",false)
+					
+					$(el).on("click",'li',function(){
+						$(el).find("li").removeClass("active");
+						$(this).addClass("active");
+						var self=this;
+						$scope.$apply(function(){
+						
+								$scope.cu=$(self).index()
+
+							
+						})
+					})
+					$(el).on("keyup","input",false);
+					$(document).on("keyup",function(e){
+						
+	                    if(e.keyCode === 8||e.keyCode ===46){
+	                        var index=$(".active").index()-1;
+	                        $scope.$apply(function(){
+	                        	if(index==-1){
+	                        		return;
+	                        	}else {
+	                        		$scope.lists.splice(index,1);
+	                        		$scope.save2local()
+	                        	}
+	                        })
+	                     }
+	                 })
+					
+					
+				}										
+			}							
+		}])
+		
+		////////////////////////////////////////////////////////    新项目
+		
+		
+		app.directive("block",[function(){
+			return{
+				restrict:"AE",
+				template:'<li class="add"><input type="text" placeholder="新项目"  disabled/></li>',
+				replace:true,
+				link:function($scope,el){
+					var obj=$("#box .right .right-finish .uls .done ul .import");
+					$(el).on("click",function(){
+						obj.toggleClass("active")
+						$("#box .right .right-finish .uls .done ul .import input").focus()
+						return false;
+					})
+					obj.on("click",false)
+					$(document).on("click",function(){
+						obj.removeClass("active");
+					})
+					
+				}
+				
+			}
 			
 			
 		}])
-		$(document).ready(function(){
+		
+		
+		
+		app.controller("testCtrl",["$scope",function($scope){
 			
-			$(".right .right-options .options").on("click",function(){
+			$scope.colors=["blue","green","yellow","brown","pink","orange","purple"];
+			if(localStorage.reminder){
+				$scope.lists=JSON.parse(localStorage.reminder)
+				console.table($scope.lists)
+			}else{
+				$scope.lists=[];
+			}
+			
+			$scope.cu=0;
+			
+			
+			/////////////////////////////////////////////////////       数据更新
+			
+			$scope.save2local=function(){
+				localStorage.reminder=JSON.stringify($scope.lists)
+			}
+			function maxId(){
+				var max=-Infinity;
+				for(var i=0;i<$scope.lists.length;i++){
+					var v=$scope.lists[i];
+					if(v.id>max){
+						max=v.id
+					}
+				}
+				return (max===-Infinity) ? 0:max;
+			}
+			
+			////////////////////////////////////////////////////////    添 加 
+			
+			$scope.addlist=function(){
+				var len=$scope.lists.length;
+				var index=len % 7
+				var v={
+					id: maxId()+1,
+					name:'新列表'+(len+1),
+					theme:$scope.colors[index]
+				}
+				$scope.lists.push(v)
+				
+			}
+			//颜色选择模块出现
+			$scope.color=function(e){
+				e.preventDefault()
+                e.stopPropagation()
 				$("#box .color").toggleClass("click");
+				return false;
+			}
+			$("#box .color").on("click",false)
+			$(document).on("click",function(){
+				$("#box .color").removeClass("click");
 			})
 			
 			
-		})
+		}])
 		
 		
 	</script>
