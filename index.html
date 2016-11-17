@@ -80,27 +80,51 @@
 				<div class="right-finish">
 					<ul class="uls">
 						<li class="done">
-							<a href=""><span class="s"></span>已完成: <span>1</span>项</a>
-							<a href="" class="del">清除所有完成选项</a>
+							
+							<!--已完成表头-->
+							<a href="#" ng-click="up($even)"><span class="s"></span>已完成: <span>{{Ylength()}}</span>项</a>
+							<a href="#" class="del" ng-click="del();save2local()">清除所有完成选项</a>
 							<ul>
-								<li class="yi">
-									<div class="big">
+								
+								
+								<!--已完成-->
+								
+								<li ng-click="show($event,$index)" ng-if="v.status===1" ng-repeat="v in lists[cu].todos track by $index" class="yi">
+									<div class="big" ng-click="v.status=0;save2local()">
 										<div class="small"></div>
 									</div>
-									<input type="text" value="已完成一" />
-								</li>
-								<li class="lis">
-									<a href=""><span class="s1"></span>未完成: <span>1</span>项</a>
-								</li>
-								<li class="wei">
-									<div class="big"></div>
-									<input type="text" value="未完成一" />
-								</li>
-								<li class="import">
+									<input type="text" ng-model="v.name" ng-keyup="save($event)"/>
 									<div class="top"></div>
 									<div class="back"></div>									
 									<div class="bot"></div>
-									<input class="text" type="text" />
+									<div class="delete" ng-click="dele($event,$index);save2local()">删除</div>
+								</li>
+								
+								<!--未完成表头-->
+								
+								<li class="lis">
+									<a href="#" ng-click="up1($even)"><span class="s1"></span>未完成: <span>{{Wlength()}}</span>项</a>
+								</li>
+								
+								<!--未完成-->
+								
+								<li ng-click="shows($event,$index);save2local()" class="wei"  ng-repeat="v in lists[cu].todos track by $index" ng-if="v.status===0">
+									<div class="big" ng-click="v.status=1;save2local()"></div>
+									<input type="text" ng-model="v.name" ng-keyup="save($event)" />
+									<div class="top"></div>
+									<div class="back"></div>									
+									<div class="bot"></div>
+									<div class="delete" ng-click="dele1($event,$index);save2local()">删除</div>
+								</li>
+								
+								<!--输入框-->
+								
+								<li class="import" >
+									<div class="top"></div>
+									<div class="back"></div>									
+									<div class="bot"></div>
+									<input class="text" type="text" ng-model="value"/>
+									<div class="over" ng-click="addtodos()">完成</div>
 								</li>
 		 						<li block></li>
 							</ul>
@@ -114,17 +138,16 @@
 					<input type="text" ng-model="lists[cu].name" />
 					<p>列表颜色</p>
 					<ul>
-						<li class="{{i}}" ng-repeat="i in colors" ng-click="lists[cu].theme=i;save2local()">
-							<div></div>
-						</li>
-						
+						<li class="{{i}}" ng-repeat="i in colors"  ng-class="{index:i==lists[cu].theme}" >
+							<div ng-click="lists[cu].theme=i;save2local()"></div>
+						</li>						
 					</ul>
 					<div class="color-bottom">
 						<div class="bLeft">
-							<a href="#">删除</a>
+							<a href="#" ng-click="deleteList($event)">删除</a>
 						</div>
 						<div class="bRight">
-							<a href="#">取消</a>
+							<a href="#" ng-click="color($event)">取消</a>
 							<a href="#" ng-click="save2local()">完成</a>
 						</div>
 					</div>
@@ -151,23 +174,29 @@
 						$(this).addClass("active");
 						var self=this;
 						$scope.$apply(function(){
-						
-								$scope.cu=$(self).index()
-
-							
+							var ins=$(self).index()
+								$scope.cu=ins;																		
+								console.log($scope.cu)
 						})
 					})
 					$(el).on("keyup","input",false);
 					$(document).on("keyup",function(e){
 						
 	                    if(e.keyCode === 8||e.keyCode ===46){
-	                        var index=$(".active").index()-1;
+	                        var index=$(".active").index();
 	                        $scope.$apply(function(){
 	                        	if(index==-1){
 	                        		return;
-	                        	}else {
-	                        		$scope.lists.splice(index,1);
+	                        	}else {	                        		
 	                        		$scope.save2local()
+	                        		if($scope.cu==0 ){	                        			
+	                        			return	                        			
+	                        		}else{
+                        				$scope.cu=$scope.cu-1;
+                        				$scope.lists.splice(index,1);
+                        				$(el).find("li").removeClass("active");
+                        			}
+	                        			                        		
 	                        	}
 	                        })
 	                     }
@@ -184,7 +213,7 @@
 		app.directive("block",[function(){
 			return{
 				restrict:"AE",
-				template:'<li class="add"><input type="text" placeholder="新项目"  disabled/></li>',
+				template:'<li class="add"><input type="text" placeholder="新项目"  disabled /></li>',
 				replace:true,
 				link:function($scope,el){
 					var obj=$("#box .right .right-finish .uls .done ul .import");
@@ -204,6 +233,7 @@
 			
 			
 		}])
+		
 		
 		
 		
@@ -244,12 +274,81 @@
 				var v={
 					id: maxId()+1,
 					name:'新列表'+(len+1),
-					theme:$scope.colors[index]
+					theme:$scope.colors[index],
+					todos:[]
 				}
+//				console.log(maxId()+1)
 				$scope.lists.push(v)
 				
 			}
+			
+			function maxid(){
+				var max=-Infinity;
+				var o=$scope.lists[$scope.cu].todos
+				for(var i=0;i<o.length;i++){
+					var v=$scope.lists[$scope.cu].todos[i];
+					if(v.id>max){
+						max=v.id
+					}
+				}
+				return (max===-Infinity) ? 0:max;
+			}
+			
+			$scope.addtodos=function(){
+//				var len=$scope.lists.length;
+//				var index=len % 7
+				var v={
+					id: maxid()+1,
+					name:$scope.value,
+					status:0
+				}
+				console.log(maxId()+1)
+				
+				$scope.lists[$scope.cu].todos.push(v)
+				$scope.save2local();
+				$scope.value=''
+			}
+			
+			$scope.dele=function(e,i){
+				e.preventDefault()
+                e.stopPropagation()
+                var newarr=[];
+				
+				var newid=$scope.lists[$scope.cu].todos[i].id;
+				$scope.lists[$scope.cu].todos.forEach(function(v,i){
+					var id=v.id
+					if(id!==newid){
+						newarr.push(v)
+					}else{
+						return
+					}
+					
+				})
+				$scope.lists[$scope.cu].todos=newarr;
+			}
+			
+			$scope.dele1=function(e,i){
+				e.preventDefault()
+                e.stopPropagation()
+                var newarr=[];
+				
+				var newid=$scope.lists[$scope.cu].todos[i].id;
+				$scope.lists[$scope.cu].todos.forEach(function(v,i){
+					var id=v.id
+					if(id!==newid){
+						newarr.push(v)
+					}else{
+						return
+					}
+					
+				})
+				$scope.lists[$scope.cu].todos=newarr;
+			}
+			
+			
+			
 			//颜色选择模块出现
+			
 			$scope.color=function(e){
 				e.preventDefault()
                 e.stopPropagation()
@@ -261,6 +360,120 @@
 				$("#box .color").removeClass("click");
 			})
 			
+			
+			$(document).on("click",function(){
+				$(".right-finish .uls .done ul li").removeClass("change");
+			})
+			
+			
+			$scope.show=function(e,i){
+				e.preventDefault()
+                e.stopPropagation()   
+
+				$(".right-finish .uls .done ul li").removeClass("change");
+                
+				$(".right-finish .uls .done ul .yi").eq(i).addClass("change");
+				return false;
+			}
+			
+			
+
+			$scope.shows=function(e,i){
+				e.preventDefault()
+                console.log(i)
+                e.stopPropagation()     
+                $(".right-finish .uls .done ul li").removeClass("change");
+				$(".right-finish .uls .done ul li").eq(i+1).addClass("change");
+				return false;
+			}
+			$(".right-finish .uls .done ul li input").on("click",function(){
+				$(".right-finish .uls .done ul li").removeClass("change");
+			})
+			
+			
+			
+			
+			
+			
+			$scope.Ylength=function(){
+				var x=0;
+				$scope.lists[$scope.cu].todos.forEach(function(v,i){
+					if(v.status===1){
+						x++;
+					}
+					
+				})
+				return x;
+			}
+			$scope.Wlength=function(){
+				var x=0;
+				$scope.lists[$scope.cu].todos.forEach(function(v,i){
+					if(v.status===0){
+						x++;
+					}
+					
+				})
+				return x;
+			}
+			$scope.del=function(){
+				var newarr=[];
+				$scope.lists[$scope.cu].todos.forEach(function(v,i){
+					if(v.status===0){
+						newarr.push(v)
+					}else{
+						return
+					}
+				})
+				$scope.lists[$scope.cu].todos=newarr;
+				
+				
+			}
+			
+			$scope.up=function(){
+				$(".right-finish .uls .done .s").toggleClass("rotate")
+                $(".right-finish .uls .done ul .yi").toggleClass("index")
+			}
+			
+			$scope.up1=function(){
+				$(".right-finish .uls .done ul .lis a .s1").toggleClass("rotate1")
+				
+                $(".right-finish .uls .done ul .wei").toggleClass("index")
+			}
+			
+			$scope.save=function(e){
+				e.stopPropagation()
+				if(e.keyCode == 13){				
+					$scope.save2local()										
+				}			
+			}
+			
+			$scope.save1=function(e){
+				e.stopPropagation()
+				if(e.keyCode == 13){				
+					$scope.save2local()										
+				}			
+			}
+			
+			
+			
+			$scope.deleteList=function(e){
+				e.stopPropagation()				
+				var index=$("#box .left .left-bottom .active").index();
+				if(index==-1){
+            		return;
+            	}else {	   
+            		if($scope.cu==0){
+            			return;
+            		}else{
+            			
+    					$scope.lists.splice(index,1);
+    					$("#box .left .left-bottom").find("li").removeClass("active");
+    					$scope.cu=$scope.cu-1;
+            		}
+            		$scope.save2local()
+			
+				}
+			}
 			
 		}])
 		
